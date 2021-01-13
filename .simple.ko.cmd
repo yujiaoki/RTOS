@@ -1,0 +1,1 @@
+cmd_/home/yujiaoki/RE/final_assignment/simple.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000  --build-id  -T ./scripts/module-common.lds -o /home/yujiaoki/RE/final_assignment/simple.ko /home/yujiaoki/RE/final_assignment/simple.o /home/yujiaoki/RE/final_assignment/simple.mod.o;  true
