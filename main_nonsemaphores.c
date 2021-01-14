@@ -26,7 +26,7 @@ pthread_t thread_id[NTASKS];
 struct sched_param parameters[NTASKS];
 int missed_deadlines[NTASKS];
 // the string variable of the result of implementing right now
-// char now_str[100];
+char now_str[100];
  
 // initialization of mutexes and conditions 
 pthread_mutex_t mutex_task = PTHREAD_MUTEX_INITIALIZER;
@@ -46,7 +46,7 @@ void *task3( void *);
 
 // initialization of mutexes and conditions (only for aperiodic scheduling)
 // loop count of each thread 
-int lc = 100;
+int lc = 10;
 
 int send_to_simple_mod(char call_msg[]) 
 {
@@ -229,7 +229,8 @@ void task1_code()
 {
 	//print the id of the current task
   	printf(" [1 "); fflush(stdout);
-    char now_str[] = "[1";
+    // connecting as string
+    connect_string (now_str,"[1");
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str);
 	//this double loop with random computation is only required to waste time
@@ -242,10 +243,14 @@ void task1_code()
 			uno = rand()*rand()%10;
     		}
   	}
-    char now_str2[] = "1]";
+    // char now_str2[] = "1]";
+    // //send the result of implementing to simple module(simple.c simple.ko)
+    // send_to_simple_mod(now_str2);
+	//  connecting as string
+    connect_string(now_str,"1]");
+    // char now_str2[]  = "1]";
     //send the result of implementing to simple module(simple.c simple.ko)
-    send_to_simple_mod(now_str2);
-
+    send_to_simple_mod(now_str);
   	//print the id of the current task
   	printf(" 1] "); fflush(stdout);
 }
@@ -285,7 +290,9 @@ void task2_code()
 {
 	//print the id of the current task
   	printf(" [2 "); fflush(stdout);
-    char now_str[] = "[2";
+    // char now_str[] = "[2";
+	// connecting as string
+    connect_string (now_str,"[2");
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str);
 	//this double loop with random computation is only required to waste time
@@ -298,10 +305,12 @@ void task2_code()
 			uno = rand()*rand()%10;
     		}
   	}
-    char now_str2[] = "2]";
+    // connecting as string
+    connect_string(now_str,"2]");
+    // char now_str2[] = "2]";
     //send the result of implementing to simple module(simple.c simple.ko)
-    send_to_simple_mod(now_str2);
-
+    // send_to_simple_mod(now_str2);
+	send_to_simple_mod(now_str);
   	//print the id of the current task
   	printf(" 2] "); fflush(stdout);
 }
@@ -330,7 +339,9 @@ void task3_code()
 {
 	//print the id of the current task
   	printf(" [3 "); fflush(stdout);
-    char now_str[] = "[3";
+    // connecting as string
+    connect_string (now_str,"[3");
+    // char now_str[] = "[3";
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str);
 	//this double loop with random computation is only required to waste time
@@ -342,9 +353,11 @@ void task3_code()
 			uno = rand()*rand()%10;
     		}
   	}
-    char now_str2[] = "3]";
+     // connecting as string
+    connect_string(now_str,"3]");
+    // char now_str2[] = "3]";
     //send the result of implementing to simple module(simple.c simple.ko)
-    send_to_simple_mod(now_str2);
+    send_to_simple_mod(now_str);
 
   	//print the id of the current task
   	printf(" 3] "); fflush(stdout);

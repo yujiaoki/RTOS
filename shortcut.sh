@@ -1,3 +1,5 @@
+#! /bin/sh
+
 sudo su
 make
 insmod simple.ko

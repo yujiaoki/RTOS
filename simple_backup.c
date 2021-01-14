@@ -102,17 +102,15 @@ ssize_t simple_write(struct file *filp, const char __user *buf, size_t count,
          ssize_t retval = 0; /* return value */
          if (down_interruptible(&dev->sem))
                  return -ERESTARTSYS;
-
 	 if (count >= dev->memsize) 
                  count = dev->memsize;
-
          if (copy_from_user(dev->data, buf, count)) {
                  retval = -EFAULT;
                  goto out;
          }
-         retval = count;
-        printk(KERN_CONT"%s", dev->data);
-        
+         printk("call simple_write");
+        // printk(KERN_CONT"%s",dev->data);
+        printk(dev->data);
 	out:
          	up(&dev->sem);
          	return retval;
