@@ -103,6 +103,8 @@ I show the result following below. As you expect, preemptions don't occur thanks
 <div align="center">
 <img src="result_task6.png" alt="pic" title="タイトル">
 </div>
+
+
 ## how to build and execute
 
 1. `sudo su`
