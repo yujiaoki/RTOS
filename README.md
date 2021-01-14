@@ -5,7 +5,7 @@ Name : Yuji Aoki
 
 ## Requirements
 
-Task is following below,
+Tasks I should implement is following below,
 
 (1) Design an application with 3 threads, whose periods are 300ms, 500ms, and 800ms.
 
@@ -56,7 +56,7 @@ int i,j;
   	}
 ```
 
-3&4. > Design a simple driver with only open, close, write system calls.
+3. > Design a simple driver with only open, close, write system calls.
 
 The part equivalent to this function is followoing below,
 
@@ -80,14 +80,29 @@ int send_to_simple_mod(char call_msg[])
 	 close(fd);
 }
 ```
+
+4. > During its execution, every tasks 
+
+Please look at my code `main.c` and `main_nonusesemaphoes.c`
+
 5. >  The write system call simply writes on the kernel log the string that was received from the thread. A typical output of the system, by reading the kernel log, may be the following [11][2[11]2][3[11]3]  . This clearly shows that some threads can be preempted by other threads (if this does not happen, try to increase the computational time of longer tasks).
 
 I just check the kernel log the system call writes by `dmesg` (you can get the system call by main_nonsemaphores.c)
+I show the result following below. As you expect, in some part, preemptions occur.
+
+<div align="center">
+<img src="result_task1-5(non-usesemaphores).png" alt="pic" title="タイトル">
+</div>
+
 
 6. > Finally, modify the code of all tasks in order to use semaphores. Every thread now protects all its operations (i) to (v) with a semaphore, which basically prevents other tasks from preempting it. Specifically, use semaphores with priority ceiling. 
 
 I consider the version of using semaphores. (you can get the system call by main.c)
+I show the result following below. As you expect, preemptions don't occur thanks to semaphores.
 
+<div align="center">
+<img src="result_task6.png" alt="pic" title="タイトル">
+</div>
 ## how to build and execute
 
 1. `sudo su`
