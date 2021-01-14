@@ -7,6 +7,7 @@
 #include <linux/moduleparam.h>
 #include <linux/init.h>
  
+#include <linux/uaccess.h>
 #include <linux/kernel.h>       /* printk() */
 #include <linux/slab.h>         /* kmalloc() */
 #include <linux/fs.h>           /* everything... */
@@ -36,7 +37,7 @@ module_param(simple_major, int, S_IRUGO);
 module_param(simple_minor, int, S_IRUGO);
 module_param(memsize, int, S_IRUGO);
 
-MODULE_AUTHOR("Antonio Sgorbissa");
+MODULE_AUTHOR("Yuji Aoki");
 MODULE_LICENSE("Dual BSD/GPL");
 
 
@@ -81,7 +82,7 @@ ssize_t simple_read(struct file *filp, char __user *buf, size_t count,
                  goto out;
 	    
 
-         if (raw_copy_to_user(buf, dev->data, count)) {
+         if (copy_to_user(buf, dev->data, count)) {
                  retval = -EFAULT;
                  goto out;
          }
@@ -96,21 +97,24 @@ ssize_t simple_read(struct file *filp, char __user *buf, size_t count,
 ssize_t simple_write(struct file *filp, const char __user *buf, size_t count,
                  loff_t *f_pos)
 {
+        
          struct simple_dev *dev = filp->private_data;
          ssize_t retval = 0; /* return value */
- 
+        printk(KERN_CONT "%s", dev->data);
+        // printk(dev->data);
          if (down_interruptible(&dev->sem))
                  return -ERESTARTSYS;
 
 	 if (count >= dev->memsize) 
                  count = dev->memsize;
 
-         if (raw_copy_from_user(dev->data, buf, count)) {
+         if (copy_from_user(dev->data, buf, count)) {
                  retval = -EFAULT;
                  goto out;
          }
          retval = count;
-        printk(KERN_CONT "%s", dev->data);
+        
+        
 	out:
          	up(&dev->sem);
          	return retval;

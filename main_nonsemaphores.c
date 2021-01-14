@@ -46,14 +46,14 @@ void *task3( void *);
 
 // initialization of mutexes and conditions (only for aperiodic scheduling)
 // loop count of each thread 
-int lc = 10;
+int lc = 100;
 
 int send_to_simple_mod(char call_msg[]) 
 {
          int fd, result, len;
          char buf[10];
          const char *str;
-         if ((fd = open ("/dev/simple", O_RDWR | O_APPEND)) == -1) {
+         if ((fd = open ("/dev/simple", O_RDWR)) == -1) {
                   perror("open failed");
                   return -1;
          }
@@ -68,17 +68,17 @@ int send_to_simple_mod(char call_msg[])
 
 }
 
-// char* connect_string(char* s1, const char* s2)
-// {
-//     int i = 0, j = 0;
-//     for(; s1[i] != '\0'; i++);
-//     for(; s2[j] != '\0'; j++)
-//     {
-//         s1[i + j] = s2[j];
-//     }
-//     s1[i + j] = s2[j];
-//     return s1;
-// }
+char* connect_string(char* s1, const char* s2)
+{
+    int i = 0, j = 0;
+    for(; s1[i] != '\0'; i++);
+    for(; s2[j] != '\0'; j++)
+    {
+        s1[i + j] = s2[j];
+    }
+    s1[i + j] = s2[j];
+    return s1;
+}
 
 int main() {
   	// set task periods in nanoseconds
@@ -227,12 +227,9 @@ int main() {
 // application specific task_1 code
 void task1_code()
 {
-	pthread_mutex_lock(&mutex_task);
 	//print the id of the current task
   	printf(" [1 "); fflush(stdout);
-    // connecting as string
-    // connect_string (now_str,"[1");
-	char now_str[] = "[1";
+    char now_str[] = "[1";
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str);
 	//this double loop with random computation is only required to waste time
@@ -245,16 +242,12 @@ void task1_code()
 			uno = rand()*rand()%10;
     		}
   	}
-    //  connecting as string
-    // connect_string(now_str,"1]");
-    char now_str2[]  = "1]";
+    char now_str2[] = "1]";
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str2);
 
   	//print the id of the current task
   	printf(" 1] "); fflush(stdout);
-    pthread_mutex_unlock(&mutex_task);
-	pthread_cond_signal(&cond_task);
 }
 
 //thread code for task_1 (used only for temporization)
@@ -290,14 +283,9 @@ void *task1( void *ptr)
 
 void task2_code()
 {
-	pthread_mutex_lock(&mutex_task);
-	// pthread_cond_wait(&cond_task,&mutex_task);
 	//print the id of the current task
   	printf(" [2 "); fflush(stdout);
-    // connecting as string
-    // connect_string (now_str,"[2");
-    //send the result of implementing to simple module(simple.c simple.ko)
-	char now_str[] = "[2";
+    char now_str[] = "[2";
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str);
 	//this double loop with random computation is only required to waste time
@@ -310,16 +298,12 @@ void task2_code()
 			uno = rand()*rand()%10;
     		}
   	}
-     // connecting as string
-    // connect_string(now_str,"2]");
     char now_str2[] = "2]";
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str2);
 
   	//print the id of the current task
   	printf(" 2] "); fflush(stdout);
-	// pthread_cond_signal(&cond_task);
-    pthread_mutex_unlock(&mutex_task);
 }
 
 
@@ -344,12 +328,8 @@ void *task2( void *ptr )
 
 void task3_code()
 {
-	pthread_mutex_lock(&mutex_task);
-	// pthread_cond_wait(&cond_task,&mutex_task);
 	//print the id of the current task
   	printf(" [3 "); fflush(stdout);
-    // connecting as string
-    // connect_string (now_str,"[3");
     char now_str[] = "[3";
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str);
@@ -362,16 +342,12 @@ void task3_code()
 			uno = rand()*rand()%10;
     		}
   	}
-     // connecting as string
-    // connect_string(now_str,"3]");
     char now_str2[] = "3]";
     //send the result of implementing to simple module(simple.c simple.ko)
     send_to_simple_mod(now_str2);
 
   	//print the id of the current task
   	printf(" 3] "); fflush(stdout);
-	// pthread_cond_signal(&cond_task);
-    pthread_mutex_unlock(&mutex_task);
 	
 }
 

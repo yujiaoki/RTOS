@@ -1,3 +1,10 @@
+# RTOS final assignment
+
+Student id: 5053193
+Name : Yuji Aoki
+
+
+
 Please remember to follow these steps:
 
 compile the module with make
@@ -5,6 +12,8 @@ compile the module with make
 be sure to be superuser
 
 	sudo su
+
+	make
 
 install the module with
 	
@@ -18,27 +27,13 @@ create a special device file with the proper <major> number that has been automa
 
 	mknod /dev/simple c <major> 0
 
-compile the read-final.c with
+compile the main.c with
 
-	g++ read-final.c -o read
-
-compile the write-final.c with
-
-	g++ write-final.c -o write
+	g++ -pthread main.c -o main
 
 then execute 
 
-	./write in one window
+	./main in one window
 
-open another shell with
-
-	xterm
-
-and finally run
-
-	./read 
-
-in the new window.
-
-Please remember that, in this example, read must be executed after write, otherwise the shared memory will be empty.
- 
+Last, get kernel log
+	dmesg
