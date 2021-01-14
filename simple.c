@@ -100,8 +100,6 @@ ssize_t simple_write(struct file *filp, const char __user *buf, size_t count,
         
          struct simple_dev *dev = filp->private_data;
          ssize_t retval = 0; /* return value */
-        printk(KERN_CONT "%s", dev->data);
-        // printk(dev->data);
          if (down_interruptible(&dev->sem))
                  return -ERESTARTSYS;
 
@@ -113,7 +111,8 @@ ssize_t simple_write(struct file *filp, const char __user *buf, size_t count,
                  goto out;
          }
          retval = count;
-        
+        printk(KERN_CONT"%s", dev->data);
+        // printk(dev->data);
         
 	out:
          	up(&dev->sem);

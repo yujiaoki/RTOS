@@ -53,7 +53,7 @@ int send_to_simple_mod(char call_msg[])
          int fd, result, len;
          char buf[10];
          const char *str;
-         if ((fd = open ("/dev/simple", O_RDWR | O_APPEND)) == -1) {
+         if ((fd = open ("/dev/simple", O_RDWR |O_CREAT| O_APPEND,0666)) == -1) {
                   perror("open failed");
                   return -1;
          }
@@ -65,7 +65,6 @@ int send_to_simple_mod(char call_msg[])
          }
 	//  printf("%d bytes written \n", result);
 	 close(fd);
-
 }
 
 // char* connect_string(char* s1, const char* s2)
